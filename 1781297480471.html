@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة ERD Master التفاعلية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Changa:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                        changa: ['Changa', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-subtle': 'pulseSubtle 2s infinite ease-in-out',
+                        'scale-up': 'scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-teal-500 selection:text-slate-900">
+
+    <div id="notification-container" class="fixed top-5 left-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+    <header class="bg-slate-900/95 border-b border-slate-800 px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4 sticky top-0 z-40 backdrop-blur-md">
+        <div class="flex items-center gap-3">
+            <div class="bg-teal-500 text-slate-900 p-2.5 rounded-xl font-extrabold text-2xl shadow-lg shadow-teal-500/20 font-changa">
+                ERD
+            </div>
+            <div>
+                <h1 class="font-bold text-lg md:text-xl text-white">منصة ERD Master التفاعلية</h1>
+                <p class="text-xs text-slate-400">مدرس المساق: م. محمد حاتم الافرنجي | تصميم قواعد البيانات خطوة بخطوة</p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <div class="bg-slate-800/80 border border-slate-700 px-4 py-2 rounded-xl flex items-center gap-2">
+                <span class="text-yellow-400 text-lg">🏆</span>
+                <span class="text-slate-400 text-xs">نقاط الطالب:</span>
+                <span id="score-counter" class="text-teal-400 font-black text-lg">0</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex-1 flex flex-col md:flex-row">
+        
+        <aside class="w-full md:w-80 bg-slate-900/50 border-l border-slate-800 p-4 flex flex-col gap-2 shrink-0">
+            <p class="text-xs font-semibold text-slate-500 px-3 uppercase tracking-wider mb-2">مراحل الدرس العملي</p>
+            <div id="sidebar-menu" class="space-y-1">
+                </div>
+
+            <div class="mt-8 md:mt-auto p-4 rounded-xl bg-slate-800/30 border border-slate-800/50 text-xs text-slate-400 space-y-2">
+                <div class="flex items-center gap-2 text-teal-400 font-bold">
+                    <span>🎯</span>
+                    <span>توجيه تربوي للطلاب:</span>
+                </div>
+                <p class="leading-relaxed">انتقل بين التبويبات بالترتيب لتشاهد كيف نبني المخطط تدريجياً من النص البسيط إلى الرسم الفني النهائي.</p>
+            </div>
+        </aside>
+
+        <main class="flex-1 p-6 md:p-10 overflow-y-auto relative">
+
+            <div id="slides-container" class="space-y-8">
+                
+                <div id="slide-intro" class="slide-content space-y-6">
+                    <div class="bg-gradient-to-r from-teal-500/20 to-indigo-500/10 p-8 rounded-2xl border border-slate-800 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-96 h-96 bg-teal-500/10 rounded-full filter blur-3xl -z-10"></div>
+                        <span class="text-teal-400 font-bold text-xs uppercase tracking-widest bg-teal-500/10 px-3 py-1 rounded-full">مساق قواعد البيانات العملي | تحت إشراف م. محمد حاتم الافرنجي</span>
+                        <h2 class="text-3xl md:text-5xl font-black mt-4 mb-2 text-white leading-tight font-changa">الدرس التفاعلي الأول:<br />رسم وتصميم مخطط الـ ERD</h2>
+                        <p class="text-slate-300 text-base md:text-lg max-w-3xl leading-relaxed mt-4">
+                            مرحباً بكم يا أبطال المستقبل! المخطط الهيكلي لقواعد البيانات (Entity-Relationship Diagram) هو لغة التصميم التي يتحدث بها كبار المهندسين لوصف الأنظمة وتخزين البيانات بشكل ذكي وفعال ومترابط.
+                        </p>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-slate-200 mt-8 mb-4">🎯 الأهداف التعليمية لدرس اليوم:</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-3 hover:border-teal-500/50 transition-all group">
+                            <div class="w-12 h-12 rounded-xl bg-teal-500/10 flex items-center justify-center text-teal-400 text-2xl group-hover:scale-110 transition-transform">📦</div>
+                            <h4 class="font-bold text-white text-lg">تحليل الأنظمة واستخراج الكيانات</h4>
+                            <p class="text-sm text-slate-400 leading-relaxed">القدرة على استخراج الكيانات الرئيسية (Entities) وتجنب خلطها بالأفعال والعمليات المؤقتة.</p>
+                        </div>
+
+                        <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-3 hover:border-teal-500/50 transition-all group">
+                            <div class="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 text-2xl group-hover:scale-110 transition-transform">🔑</div>
+                            <h4 class="font-bold text-white text-lg">بناء المفاتيح والخصائص</h4>
+                            <p class="text-sm text-slate-400 leading-relaxed">تحديد صفات كل كيان واكتشاف المفتاح الأساسي (Primary Key) الذي يميز السجل بشكل فريد لا يتكرر.</p>
+                        </div>
+
+                        <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-3 hover:border-teal-500/50 transition-all group">
+                            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-2xl group-hover:scale-110 transition-transform">⚡</div>
+                            <h4 class="font-bold text-white text-lg">التحكم بالعلاقات والكارديناليتي</h4>
+                            <p class="text-sm text-slate-400 leading-relaxed">فهم العلاقات (1:1, 1:M, M:N) والتمكن من تفكيك وكسر العلاقات المعقدة لضمان سلامة قاعدة البيانات.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl mt-8 flex flex-col md:flex-row justify-between items-center gap-6">
+                        <div>
+                            <h4 class="font-bold text-white mb-1">هل أنتم مستعدون للبدء بالتجربة العملية?</h4>
+                            <p class="text-sm text-slate-400">انقر على زر البدء بالأسفل للانتقال للسيناريو التفاعلي الأول للجامعة!</p>
+                        </div>
+                        <button onclick="navigate('stage1')" class="px-6 py-3 bg-teal-500 text-slate-950 font-bold rounded-xl hover:bg-teal-400 shadow-lg shadow-teal-500/10 transition-all font-changa">
+                            ابدأ الدرس العملي الآن 🚀
+                        </button>
+                    </div>
+                </div>
+
+                <div id="slide-stage1" class="slide-content space-y-6 hidden">
+                    <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest bg-slate-800 px-3 py-1 rounded-full">السيناريو التدريبي الأول</span>
+                        <blockquote class="text-lg md:text-xl font-bold text-slate-100 border-r-4 border-teal-500 pr-4 leading-relaxed my-2 py-1 font-changa">
+                            "تدير جامعة مجموعة من الطلبة والمساقات. كل طالب يستطيع تسجيل عدة مساقات، وكل مساق يمكن أن يسجل فيه عدة طلبة."
+                        </blockquote>
+                        <p class="text-sm text-slate-400">المطلوب: قم بقراءة الوصف أعلاه بدقة، ثم استخرج الكيانات التي نود تخزين معلومات عنها بالضغط عليها أدناه.</p>
+                    </div>
+
+                    <div class="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 space-y-6">
+                        <div class="text-center space-y-2">
+                            <h3 class="text-lg font-bold text-white">انقر على الكلمات التي تمثل "كياناً حقيقياً" (Entities) فقط:</h3>
+                            <p class="text-xs text-slate-400">تذكر: الكيان هو الشيء أو الكائن الذي يحمل صفات مستقلة (Noun) داخل نظام الجامعة.</p>
+                        </div>
+
+                        <div id="s1-word-pool" class="flex flex-wrap gap-3 justify-center py-4">
+                            </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                            <div class="bg-slate-950 border-2 border-dashed border-teal-500/30 p-5 rounded-2xl min-h-[160px] flex flex-col items-center justify-center space-y-3">
+                                <span class="text-xs font-extrabold text-teal-400 uppercase bg-teal-500/10 px-3 py-1 rounded-full">الكيانات المستخرجة (Entities)</span>
+                                <div id="s1-entities-zone" class="flex flex-wrap gap-2 justify-center">
+                                    <p class="text-xs text-slate-500 italic text-center py-4">انقر على الكلمات الصحيحة في الأعلى لتصنيفها هنا...</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-950 border border-slate-800 p-5 rounded-2xl flex flex-col justify-center space-y-2">
+                                <h4 class="font-bold text-white text-sm">💡 لماذا Student و Course هما الكيانات فقط؟</h4>
+                                <p class="text-xs text-slate-400 leading-relaxed">
+                                    - <b>Student</b> و <b>Course</b>: يمثلان كائنات حقيقية نريد تخزين بيانات عنها بشكل دائم بالجامعة (الاسم، الرقم، الخصائص).<br />
+                                    - <b>Registers</b> (يسجل): هو فعل يصف العلاقة، وليس كياناً يحمل صفات مستقلة.<br />
+                                    - <b>Grade</b> (الدرجة): هي خاصية ناتجة عن العلاقة ولا يمكن أن توجد لوحدها دون وجود طالب ومساق.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center pt-4 border-t border-slate-800">
+                            <button onclick="resetStage1()" class="text-xs text-slate-500 hover:text-slate-300 underline">إعادة تعيين النشاط</button>
+                            <button id="s1-next-btn" onclick="navigate('stage2')" class="hidden px-5 py-2 bg-gradient-to-r from-teal-500 to-emerald-400 text-slate-950 font-bold rounded-lg hover:scale-105 transition-transform">
+                                الذهاب للمرحلة الثانية: الخصائص ➔
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="slide-stage2" class="slide-content space-y-6 hidden">
+                    <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+                        <h3 class="text-xl font-bold text-white mb-2 font-changa">المرحلة الثانية: توزيع الخصائص (Attributes)</h3>
+                        <p class="text-sm text-slate-400">الآن بعد تحديد الكيانين الرئيسيّين (Student و Course)، علينا فرز الخصائص التابعة لكل منهما.</p>
+                    </div>
+
+                    <div class="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 space-y-6">
+                        <div class="space-y-3">
+                            <h4 class="text-sm font-bold text-center text-slate-300">الخصائص المتاحة (انقر لتوزيعها على الكيان الصحيح):</h4>
+                            <div id="s2-attributes-pool" class="flex flex-wrap gap-3 justify-center">
+                                </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                            <div class="bg-slate-950 border-2 border-indigo-500/20 rounded-2xl p-5 space-y-4">
+                                <div class="flex justify-between items-center border-b border-indigo-500/10 pb-3">
+                                    <span class="font-bold text-indigo-400 text-base">👤 كيان الطالب (Student)</span>
+                                    <span class="text-xs text-slate-500">خصائص الطالب</span>
+                                </div>
+                                <div id="s2-student-zone" class="space-y-2 min-h-[120px] flex flex-wrap gap-2 items-center justify-center border border-dashed border-slate-800 rounded-xl p-2">
+                                    <p class="text-xs text-slate-600 text-center italic">لا يوجد خصائص مخصصة للطالب حالياً...</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-950 border-2 border-emerald-500/20 rounded-2xl p-5 space-y-4">
+                                <div class="flex justify-between items-center border-b border-emerald-500/10 pb-3">
+                                    <span class="font-bold text-emerald-400 text-base">📚 كيان المساق (Course)</span>
+                                    <span class="text-xs text-slate-500">خصائص المساق</span>
+                                </div>
+                                <div id="s2-course-zone" class="space-y-2 min-h-[120px] flex flex-wrap gap-2 items-center justify-center border border-dashed border-slate-800 rounded-xl p-2">
+                                    <p class="text-xs text-slate-600 text-center italic">لا يوجد خصائص مخصصة للمساق حالياً...</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col items-center gap-4 pt-6 border-t border-slate-800">
+                            <p class="text-xs text-slate-400 text-center max-w-lg">
+                                *ملاحظة: خاصية <b class="text-rose-400">Price (سعر الشراء)</b> هي مشتت (Distractor) لأن مساقات الجامعة الحكومية لا تملك سعر شراء مباشر للجامعة بل ساعات معتمدة، ويجب استبعادها!
+                            </p>
+                            <div class="flex gap-3">
+                                <button onclick="checkStage2()" class="px-6 py-2.5 bg-teal-500 text-slate-950 font-bold rounded-lg hover:bg-teal-400 transition-all shadow-md shadow-teal-500/10">
+                                    تحقق من صحة التوزيع ✔
+                                </button>
+                                <button id="s2-next-btn" onclick="navigate('stage3')" class="hidden px-6 py-2.5 bg-slate-800 text-teal-300 border border-teal-500/20 font-bold rounded-lg hover:bg-slate-700 transition-all">
+                                    المرحلة الثالثة: المفاتيح ➔
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="slide-stage3" class="slide-content space-y-6 hidden">
+                    <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+                        <h3 class="text-xl font-bold text-white mb-2 font-changa">المرحلة الثالثة: تحديد المفاتيح الأساسية (Primary Keys)</h3>
+                        <p class="text-sm text-slate-400">
+                            المفتاح الأساسي (PK) هو الخاصية التي تميز كل سجل داخل الكيان بشكل فريد كبصمة الإصبع ولا يمكن أن تتكرر قيمتها أبداً.
+                        </p>
+                    </div>
+
+                    <div class="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 space-y-6">
+                        <h4 class="text-sm font-bold text-center text-slate-300">انقر لتحديد المفتاح الأساسي المناسب لكل جدول:</h4>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 space-y-4">
+                                <div class="text-center">
+                                    <span class="text-xs text-indigo-400 font-bold bg-indigo-500/10 px-3 py-1 rounded-full">جدول الطالب Student</span>
+                                </div>
+                                <div id="s3-student-attrs" class="space-y-2">
+                                    </div>
+                            </div>
+
+                            <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 space-y-4">
+                                <div class="text-center">
+                                    <span class="text-xs text-emerald-400 font-bold bg-emerald-500/10 px-3 py-1 rounded-full">جدول المساق Course</span>
+                                </div>
+                                <div id="s3-course-attrs" class="space-y-2">
+                                    </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800/80 text-xs text-slate-400 leading-relaxed text-center">
+                            📢 في تمثيل مخطط الـ ERD القياسي، نقوم بوضع <b class="text-teal-400 underline decoration-teal-400 underline-offset-2">خط أسفل الخاصية المفتاحية</b> لتمييزها بسهولة بالرسم الهيكلي.
+                        </div>
+
+                        <div class="flex justify-center pt-4">
+                            <button id="s3-next-btn" onclick="navigate('stage4')" class="hidden px-6 py-2.5 bg-gradient-to-r from-teal-500 to-emerald-400 text-slate-950 font-bold rounded-lg hover:scale-105 transition-all shadow-md">
+                                المرحلة الرابعة: العلاقات ➔
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="slide-stage4" class="slide-content space-y-6 hidden">
+                    <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+                        <h3 class="text-xl font-bold text-white mb-2 font-changa">المرحلة الرابعة والخامسة: اكتشاف العلاقات وتحديد الكارديناليتي</h3>
+                        <p class="text-sm text-slate-400">
+                            العلاقات تربط الكيانات وتحدد قواعد العمل بالنظام. سنحدد الفعل ونقيس القوة الحركية للعلاقة (الكارديناليتي Cardinality).
+                        </p>
+                    </div>
+
+                    <div class="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 space-y-6">
+                        <div class="space-y-4">
+                            <span class="text-xs font-bold text-teal-400 bg-teal-500/10 px-3 py-1 rounded-full">الخطوة 1: صياغة الجملة الوظيفية (العلاقة)</span>
+                            <div class="bg-slate-950 p-6 rounded-xl border border-slate-800 flex flex-wrap items-center justify-center gap-4">
+                                <div class="px-4 py-2.5 bg-indigo-500/10 border border-indigo-500/30 rounded-lg text-indigo-300 font-bold">الطالب Student</div>
+                                <div class="text-slate-500 font-bold">يقوم بـ</div>
+                                <select id="s4-relation-select" onchange="updateS4State()" class="bg-slate-900 border border-slate-700 text-teal-300 font-bold px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500">
+                                    <option value="">-- اختر العلاقة --</option>
+                                    <option value="registers">يسجل في (Registers)</option>
+                                    <option value="teaches">يدرّس (Teaches)</option>
+                                    <option value="owns">يمتلك (Owns)</option>
+                                </select>
+                                <div class="text-slate-500 font-bold">مجموعة من</div>
+                                <div class="px-4 py-2.5 bg-emerald-500/10 border border-emerald-500/30 rounded-lg text-emerald-300 font-bold">المساقات Course</div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <span class="text-xs font-bold text-teal-400 bg-teal-500/10 px-3 py-1 rounded-full">الخطوة 2: اختبار الكارديناليتي بالاتجاهين</span>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
+                                    <h4 class="text-xs font-bold text-slate-300">الاتجاه الأول (من الطالب للمساق):</h4>
+                                    <p class="text-xs text-slate-400">"الطالب الواحد يستطيع تسجيل..."</p>
+                                    <div class="flex gap-2">
+                                        <button id="s5-student-one" onclick="setCardStudent('one')" class="flex-1 py-3 rounded-lg text-xs font-bold border bg-slate-900 border-slate-800 text-slate-500 hover:border-slate-700 transition-all">
+                                            مساقاً واحداً فقط (1)
+                                        </button>
+                                        <button id="s5-student-many" onclick="setCardStudent('many')" class="flex-1 py-3 rounded-lg text-xs font-bold border bg-slate-900 border-slate-800 text-slate-500 hover:border-slate-700 transition-all">
+                                            عدة مساقات (M) ✓
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
+                                    <h4 class="text-xs font-bold text-slate-300">الاتجاه الثاني (من المساق للطالب):</h4>
+                                    <p class="text-xs text-slate-400">"المساق الواحد يمكن أن يسجل فيه..."</p>
+                                    <div class="flex gap-2">
+                                        <button id="s5-course-one" onclick="setCardCourse('one')" class="flex-1 py-3 rounded-lg text-xs font-bold border bg-slate-900 border-slate-800 text-slate-500 hover:border-slate-700 transition-all">
+                                            طالباً واحداً فقط (1)
+                                        </button>
+                                        <button id="s5-course-many" onclick="setCardCourse('many')" class="flex-1 py-3 rounded-lg text-xs font-bold border bg-slate-900 border-slate-800 text-slate-500 hover:border-slate-700 transition-all">
+                                            عدة طلبة (N) ✓
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col items-center gap-4 pt-6 border-t border-slate-800">
+                            <button onclick="validateS45()" class="px-6 py-3 bg-teal-500 text-slate-950 font-bold rounded-lg hover:bg-teal-400 transition-all shadow-md">
+                                تحقق من العلاقة والكارديناليتي 📊
+                            </button>
+
+                            <div id="s5-success-panel" class="hidden bg-emerald-950/40 border border-emerald-500/20 p-4 rounded-xl max-w-2xl text-center space-y-2 animate-scale-up">
+                                <p class="text-emerald-400 text-sm font-bold">🎉 النتيجة: العلاقة هي متعدد لمتعدد Many-to-Many (M:N)</p>
+                                <p class="text-xs text-slate-400 leading-relaxed">
+                                    رائع! ولكن هنا يواجه مصمم قواعد البيانات تحدياً هندسياً كبيراً: أنظمة قواعد البيانات العلائقية (Relational Databases) لا تستطيع تحويل علاقة M:N إلى جداول فعلية بشكل مباشر دون تشويه البيانات وتكرارها بشكل مدمر!
+                                </p>
+                                <button onclick="navigate('stage6')" class="mt-2 px-5 py-2 bg-emerald-500 text-slate-950 font-bold rounded-lg hover:bg-emerald-400 text-xs transition-all">
+                                    شاهد الحل المنهجي: المرحلة السادسة والكسر المرجعي ⚡
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="slide-stage6" class="slide-content space-y-6 hidden">
+                    <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+                        <h3 class="text-xl font-bold text-white mb-2 font-changa">المرحلة السادسة: كسر ومعالجة العلاقة متعدد لمتعدد (M:N)</h3>
+                        <p class="text-sm text-slate-400">
+                            قواعد البيانات الحقيقية لا تدعم علاقات M:N مباشرة. دعونا نكتشف كيف نقوم بهندسة حل ذكي ومثالي.
+                        </p>
+                    </div>
+
+                    <div class="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 space-y-6">
+                        
+                        <div id="s6-step1" class="space-y-4">
+                            <h4 class="font-bold text-white text-base">ما هو الحل الهندسي الصحيح لكسر العلاقة M:N في الـ ERD؟</h4>
+                            <p class="text-xs text-slate-400 leading-relaxed">اختر الحل الصحيح لفك التشابك وحل المشكلة في قواعد البيانات:</p>
+                            
+                            <div class="space-y-2">
+                                <button id="s6-opt-a" onclick="selectS6Option('a')" class="w-full text-right p-4 rounded-xl border text-xs leading-relaxed transition-all bg-slate-900 border-slate-800 text-slate-300 hover:border-slate-700">
+                                    أ) دمج جدول المساقات بالكامل مع جدول الطلاب في جدول واحد عملاق. (سيسبب تكراراً هائلاً وفوضى بالبيانات)
+                                </button>
+
+                                <button id="s6-opt-b" onclick="selectS6Option('b')" class="w-full text-right p-4 rounded-xl border text-xs leading-relaxed transition-all bg-slate-900 border-slate-800 text-slate-300 hover:border-slate-700">
+                                    ب) إنشاء كيان وسيط جديد (Associative Entity) يربط الطالب بالمساق ويحمل مفاتيحهما كعلاقة مستقلة. (الحل الهندسي المثالي) ✓
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="s6-step2" class="hidden space-y-6 animate-scale-up">
+                            <div class="text-center space-y-2">
+                                <h4 class="font-bold text-emerald-400 text-lg">ممتاز! تم إنشاء الكيان الوسيط: "التسجيل (Enrollment)"</h4>
+                                <p class="text-xs text-slate-400">هذا الكيان يتوسط بين الطالب والمساق ليقوم بتحويل العلاقة M:N إلى علاقتين من نوع 1:M مريحتين للنظام وقابلتين للتطبيق الفعلي!</p>
+                            </div>
+
+                            <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 flex flex-col md:flex-row items-center justify-center gap-6 text-center">
+                                <div class="bg-slate-900 border border-indigo-500/30 p-4 rounded-xl w-40">
+                                    <p class="font-bold text-white text-xs">Student (طالب)</p>
+                                    <p class="text-[10px] text-slate-500 mt-1">المفتاح: StudentID (1)</p>
+                                </div>
+
+                                <div class="text-teal-400 font-black animate-pulse">◀ 1:M ▶</div>
+
+                                <div class="bg-gradient-to-r from-teal-500/10 to-emerald-500/10 border border-teal-400 p-4 rounded-xl w-48 relative shadow-lg shadow-teal-500/5">
+                                    <span class="absolute -top-2.5 right-4 text-[9px] bg-teal-400 text-slate-950 px-2 py-0.5 rounded-full font-bold">الكيان الوسيط الجديد</span>
+                                    <p class="font-bold text-white text-xs">Enrollment (التسجيل)</p>
+                                    <p class="text-[10px] text-slate-400 mt-2"><b>الخصائص الأساسية:</b></p>
+                                    <p class="text-[10px] text-slate-500">StudentID (FK)</p>
+                                    <p class="text-[10px] text-slate-500">CourseID (FK)</p>
+                                    <p class="text-[10px] text-slate-500">EnrollmentDate (التاريخ)</p>
+                                    <p class="text-[10px] text-slate-500">Grade (الدرجة)</p>
+                                </div>
+
+                                <div class="text-teal-400 font-black animate-pulse">◀ M:1 ▶</div>
+
+                                <div class="bg-slate-900 border border-emerald-500/30 p-4 rounded-xl w-40">
+                                    <p class="font-bold text-white text-xs">Course (مساق)</p>
+                                    <p class="text-[10px] text-slate-500 mt-1">المفتاح: CourseID (1)</p>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-center pt-4">
+                                <button onclick="navigate('stage7')" class="px-6 py-2.5 bg-gradient-to-r from-teal-500 to-emerald-400 text-slate-950 font-bold rounded-lg hover:scale-105 transition-all shadow-md">
+                                    مشاهدة المخطط التفاعلي الكامل ➔
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="slide-stage7" class="slide-content space-y-6 hidden">
+                    <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+                        <h3 class="text-xl font-bold text-white mb-2 font-changa">المخطط التفاعلي النهائي للجامعة</h3>
+                        <p class="text-sm text-slate-400">
+                            هذا هو التمثيل الهندسي الصرف لقواعد البيانات. تصفح المخطط التفاعلي، وانقر على الكيانات أو المفاتيح لمشاهدة تفاصيلها البنائية في الحال.
+                        </p>
+                    </div>
+
+                    <div class="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 flex flex-col items-center justify-center space-y-6">
+                        
+                        <div class="w-full max-w-4xl bg-slate-950 border border-slate-800 rounded-2xl p-4 overflow-x-auto">
+                            <svg viewBox="0 0 800 320" class="w-full min-w-[700px] h-auto">
+                                <defs>
+                                    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#2dd4bf" />
+                                    </marker>
+                                </defs>
+
+                                <g class="cursor-pointer group" onclick="triggerNotification('كيان الطالب: يحتوي على StudentID كمفتاح أساسي فريد.', 'success')">
+                                    <rect x="50" y="110" width="140" height="70" rx="10" fill="#1e1b4b" stroke="#6366f1" stroke-width="3" class="hover:fill-indigo-950 transition-colors" />
+                                    <text x="120" y="150" fill="#ffffff" font-weight="bold" font-size="14" text-anchor="middle">Student (طالب)</text>
+                                </g>
+                                
+                                <g class="cursor-pointer" onclick="triggerNotification('StudentID: مفتاح أساسي فريد (Underline).', 'success')">
+                                    <line x1="120" y1="110" x2="120" y2="60" stroke="#6366f1" stroke-width="2" />
+                                    <ellipse cx="120" cy="50" rx="45" ry="20" fill="#0f172a" stroke="#2dd4bf" stroke-width="2" />
+                                    <text x="120" y="54" fill="#2dd4bf" font-size="10" font-weight="bold" text-anchor="middle" text-decoration="underline">StudentID (PK)</text>
+                                </g>
+                                <g class="cursor-pointer" onclick="triggerNotification('Name: خاصية تصف اسم الطالب.', 'success')">
+                                    <line x1="80" y1="110" x2="50" y2="70" stroke="#6366f1" stroke-width="2" />
+                                    <ellipse cx="40" cy="60" rx="35" ry="18" fill="#0f172a" stroke="#6366f1" stroke-width="1" />
+                                    <text x="40" y="64" fill="#94a3b8" font-size="10" text-anchor="middle">Name</text>
+                                </g>
+
+                                <line x1="190" y1="145" x2="330" y2="145" stroke="#2dd4bf" stroke-width="2" stroke-dasharray="4 4" />
+                                <text x="210" y="135" fill="#a7f3d0" font-size="12" font-weight="bold">1</text>
+                                <text x="310" y="135" fill="#a7f3d0" font-size="12" font-weight="bold">M</text>
+
+                                <g class="cursor-pointer group" onclick="triggerNotification('الكيان الوسيط: يجمع بين المفاتيح الخارجية للطلاب والمساقات.', 'success')">
+                                    <rect x="330" y="90" width="150" height="110" rx="10" fill="#0f172a" stroke="#2dd4bf" stroke-width="4" />
+                                    <text x="405" y="125" fill="#ffffff" font-weight="bold" font-size="14" text-anchor="middle">Enrollment</text>
+                                    <text x="405" y="145" fill="#94a3b8" font-size="11" text-anchor="middle">StudentID (FK)</text>
+                                    <text x="405" y="165" fill="#94a3b8" font-size="11" text-anchor="middle">CourseID (FK)</text>
+                                    <text x="405" y="185" fill="#2dd4bf" font-size="10" text-anchor="middle">Grade, Date</text>
+                                </g>
+
+                                <line x1="480" y1="145" x2="620" y2="145" stroke="#2dd4bf" stroke-width="2" stroke-dasharray="4 4" />
+                                <text x="500" y="135" fill="#a7f3d0" font-size="12" font-weight="bold">M</text>
+                                <text x="600" y="135" fill="#a7f3d0" font-size="12" font-weight="bold">1</text>
+
+                                <g class="cursor-pointer group" onclick="triggerNotification('كيان المساق: يحتوي على رمز المساق الفريد وميزاته.', 'success')">
+                                    <rect x="620" y="110" width="140" height="70" rx="10" fill="#064e3b" stroke="#10b981" stroke-width="3" class="hover:fill-emerald-950 transition-colors" />
+                                    <text x="690" y="150" fill="#ffffff" font-weight="bold" font-size="14" text-anchor="middle">Course (مساق)</text>
+                                </g>
+
+                                <g class="cursor-pointer" onclick="triggerNotification('CourseID: المفتاح الأساسي للمساقات.', 'success')">
+                                    <line x1="690" y1="110" x2="690" y2="60" stroke="#10b981" stroke-width="2" />
+                                    <ellipse cx="690" cy="50" rx="45" ry="20" fill="#0f172a" stroke="#2dd4bf" stroke-width="2" />
+                                    <text x="690" y="54" fill="#2dd4bf" font-size="10" font-weight="bold" text-anchor="middle" text-decoration="underline">CourseID (PK)</text>
+                                </g>
+                                <g class="cursor-pointer" onclick="triggerNotification('Credits: الساعات المعتمدة للمساق الدراسي.', 'success')">
+                                    <line x1="730" y1="110" x2="760" y2="70" stroke="#10b981" stroke-width="2" />
+                                    <ellipse cx="770" cy="60" rx="35" ry="18" fill="#0f172a" stroke="#10b981" stroke-width="1" />
+                                    <text x="770" y="64" fill="#94a3b8" font-size="10" text-anchor="middle">Credits</text>
+                                </g>
+                            </svg>
+                        </div>
+
+                        <p class="text-xs text-slate-400 text-center max-w-2xl leading-relaxed">
+                            💡 <b>ملاحظة فنية هامة:</b> انظر كيف تم كسر العلاقة المعقدة بنجاح، مما يحمي قاعدة البيانات من التكرار والضياع المرجعي.
+                        </p>
+
+                        <div class="flex gap-4">
+                            <button onclick="navigate('stage8')" class="px-6 py-3 bg-gradient-to-r from-teal-500 to-emerald-400 text-slate-950 font-bold rounded-xl hover:scale-105 transition-all shadow-md font-changa">
+                                مستعد لتحدي المكتبة الشامل؟ 💪 ➔
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="slide-stage8" class="slide-content space-y-6 hidden">
+                    <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+                        <h3 class="text-xl font-bold text-white mb-2 font-changa">المرحلة السابعة: تحدي المكتبة الشامل (الكارديناليتي الحقيقي)</h3>
+                        <p class="text-sm text-slate-400">تحدي نهائي قياسي لقياس المهارة: لنقم بتحليل علاقة الكتب والمؤلفين بنظام إدارة المكتبات العامة.</p>
+                    </div>
+
+                    <div class="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 space-y-6">
+                        <div class="bg-slate-950 p-5 rounded-xl border border-slate-800/60 text-center space-y-3">
+                            <p class="text-sm text-slate-300 font-bold">"الكتاب الواحد يمكن تأليفه بواسطة أكثر من مؤلف، والمؤلف الواحد يمكنه كتابة أكثر من كتاب."</p>
+                            <p class="text-xs text-slate-400">ما هو نوع الكارديناليتي المناسب هندسياً لهذا النظام لتسليمه والحصول على الرمز الذهبي؟</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <button onclick="submitStage8('one-one')" class="p-4 bg-slate-950 border border-slate-800 rounded-xl text-xs font-bold text-slate-400 hover:border-rose-500/40 transition-all">
+                                علاقة واحد لواحد (1:1)
+                            </button>
+                            <button onclick="submitStage8('one-many')" class="p-4 bg-slate-950 border border-slate-800 rounded-xl text-xs font-bold text-slate-400 hover:border-rose-500/40 transition-all">
+                                علاقة واحد لمتعدد (1:M)
+                            </button>
+                            <button onclick="submitStage8('many-many')" class="p-4 bg-slate-950 border border-slate-800/80 rounded-xl text-xs font-bold text-teal-400 border-teal-500/30 hover:bg-slate-900 transition-all">
+                                علاقة متعدد لمتعدد (M:N) ✓
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="slide-stage9" class="slide-content space-y-6 hidden">
+                    <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+                        <h3 class="text-xl font-bold text-white mb-2 font-changa">المرحلة الثامنة: تسليم المشروع التطبيقي النهائي</h3>
+                        <p class="text-sm text-slate-400">لقد وصلت لخط النهاية الفنية! قم بتعبئة الاستمارة الهندسية بالأسفل لإتمام مراجعة مشروعك المتميز.</p>
+                    </div>
+
+                    <div class="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 space-y-4">
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold text-slate-300">1. الكيانات المقترحة لمشروعك التطبيقي:</label>
+                            <input id="proj-entities" type="text" placeholder="مثال: المستشفى، المريض، الطبيب" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-slate-200 focus:outline-none focus:border-teal-500" />
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold text-slate-300">2. المفاتيح الأساسية المختارة لكل كيان:</label>
+                            <input id="proj-keys" type="text" placeholder="مثال: رقم المريض، رقم الطبيب الفريد" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-slate-200 focus:outline-none focus:border-teal-500" />
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold text-slate-300">3. شبكة العلاقات ونوع الكارديناليتي المتوقع:</label>
+                            <textarea id="proj-relations" rows="3" placeholder="مثال: يزور المريض الطبيب (علاقة متعدد لمتعدد مكسورة بجدول وسيط الزيارات)" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-slate-200 focus:outline-none focus:border-teal-500"></textarea>
+                        </div>
+
+                        <div class="pt-2 flex flex-col items-center gap-4">
+                            <button onclick="submitProject()" class="w-full md:w-auto px-8 py-3 bg-gradient-to-r from-teal-500 to-emerald-400 text-slate-950 font-black rounded-xl hover:scale-105 transition-all shadow-md font-changa">
+                                تسليم استمارة المشروع للمهندس 💾
+                            </button>
+
+                            <div id="project-success-panel" class="hidden bg-teal-950/40 border border-teal-500/20 p-4 rounded-xl text-center space-y-2 animate-scale-up">
+                                🌟 <b>ألف مبروك!</b> تم إرسال مشروعك بنجاح تام إلى لوحة تحكم م. محمد حاتم الافرنجي للمراجعة والاعتماد الفوري. أحسنت عملاً!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <footer class="bg-slate-900 border-t border-slate-800 px-6 py-4 text-center text-xs text-slate-500">
+        &copy; 2024 جميع الحقوق محفوظة لمنصة ERD Master التفاعلية | م. محمد حاتم الافرنجي
+    </footer>
+
+    <script>
+        // مصفوفة تعريف مراحل الدرس والمحتوى المنهجي المخصص
+        const stages = [
+            { id: 'intro', title: 'الأهداف التعليمية والمقدمة', icon: '🎯' },
+            { id: 'stage1', title: 'المرحلة 1: استخراج الكيانات', icon: '📦' },
+            { id: 'stage2', title: 'المرحلة 2: توزيع الخصائص', icon: '📋' },
+            { id: 'stage3', title: 'المرحلة 3: المفاتيح الأساسية', icon: '🔑' },
+            { id: 'stage4', title: 'المرحلة 4-5: الكارديناليتي والعلاقات', icon: '📊' },
+            { id: 'stage6', title: 'المرحلة 6: معالجة كسر M:N', icon: '⚡' },
+            { id: 'stage7', title: 'المرحلة 7: المخطط الهيكلي النهائي', icon: '🎨' },
+            { id: 'stage8', title: 'المرحلة 8: تحدي المكتبة الشامل', icon: '🏆' },
+            { id: 'stage9', title: 'المرحلة 9: تسليم المشروع النهائي', icon: '💾' }
+        ];
+
+        // الحالة العامة للتطبيق والأمور التنافسية للطالب
+        let state = {
+            currentStage: 'intro',
+            score: 0,
+            s1Selected: [],
+            s2Data: {
+                student: [],
+                course: []
+            },
+            s3StudentPK: null,
+            s3CoursePK: null,
+            s4Relation: '',
+            s5StudentCard: '',
+            s5CourseCard: '',
+            s6Option: null,
+            projectSubmitted: false
+        };
+
+        // تحديث النقاط بالواجهة بشكل جمالي متميز
+        const updateScore = (amount) => {
+            state.score += amount;
+            const counter = document.getElementById('score-counter');
+            if (counter) counter.innerText = state.score;
+        };
+
+        // دالة إنشاء الإشعارات التربوية الفورية المخصصة
+        const triggerNotification = (message, type = 'success') => {
+            const container = document.getElementById('notification-container');
+            if (!container) return;
+
+            const toast = document.createElement('div');
+            toast.className = `flex items-center gap-3 px-4 py-3 rounded-xl border text-xs font-bold shadow-xl animate-scale-up pointer-events-auto ${
+                type === 'success' 
+                ? 'bg-emerald-950/90 border-emerald-500/30 text-emerald-400' 
+                : 'bg-rose-950/90 border-rose-500/30 text-rose-400'
+            }`;
+            
+            toast.innerHTML = `<span>${type === 'success' ? '✨' : '❌'}</span><p>${message}</p>`;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-10px)';
+                toast.style.transition = 'all 0.4s ease';
+                setTimeout(() => toast.remove(), 400);
+            }, 3500);
+        };
+
+        // نظام التنقل الرئيسي والتحكم بظهور السلايدات (Tabs Router)
+        const navigate = (stageId) => {
+            state.currentStage = stageId;
+            
+            // إخفاء كافة التبويبات
+            document.querySelectorAll('.slide-content').forEach(el => el.classList.add('hidden'));
+            
+            // إظهار التبويب المطلوب
+            const targetSlide = document.getElementById(`slide-${stageId}`);
+            if (targetSlide) targetSlide.classList.remove('hidden');
+
+            renderSidebar();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        // بناء وتحديث القائمة الجانبية ديناميكياً
+        const renderSidebar = () => {
+            const menu = document.getElementById('sidebar-menu');
+            if (!menu) return;
+            menu.innerHTML = '';
+
+            stages.forEach(stage => {
+                const btn = document.createElement('button');
+                btn.onclick = () => navigate(stage.id);
+                
+                const isActive = state.currentStage === stage.id;
+                btn.className = `w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all text-right ${
+                    isActive 
+                    ? 'bg-teal-500 text-slate-950 shadow-lg shadow-teal-500/10' 
+                    : 'text-slate-400 hover:bg-slate-900/60 hover:text-slate-200'
+                }`;
+
+                btn.innerHTML = `<span>${stage.icon}</span><span class="truncate">${stage.title}</span>`;
+                menu.appendChild(btn);
+            });
+        };
+
+
+        // --- المرحلة الأولى: استخراج الكيانات والمشتتات النحوية ---
+        const s1Words = [
+            { text: 'Student (الطالب)', isEntity: true },
+            { text: 'Registers (يسجل)', isEntity: false },
+            { text: 'Course (المساق)', isEntity: true },
+            { text: 'Grade (الدرجة)', isEntity: false },
+            { text: 'University (الجامعة)', isEntity: false } // تم اعتبارها سياق عام هنا وليست كيان تخزيني مستقل بالسيناريو
+        ];
+
+        const renderStage1Words = () => {
+            const pool = document.getElementById('s1-word-pool');
+            if (!pool) return;
+            pool.innerHTML = '';
+
+            s1Words.forEach((word, index) => {
+                const btn = document.createElement('button');
+                btn.innerText = word.text;
+                
+                const isSelected = state.s1Selected.includes(index);
+                btn.className = `px-4 py-2 rounded-lg text-xs font-bold border transition-all ${
+                    isSelected 
+                    ? 'bg-teal-500/20 border-teal-500 text-teal-300 scale-95 pointer-events-none' 
+                    : 'bg-slate-900 border-slate-800 text-slate-300 hover:border-slate-700'
+                }`;
+
+                btn.onclick = () => handleStage1Click(index);
+                pool.appendChild(btn);
+            });
+        };
+
+        const handleStage1Click = (index) => {
+            const word = s1Words[index];
+            if (word.isEntity) {
+                state.s1Selected.push(index);
+                updateScore(10);
+                triggerNotification(`أحسنت! "${word.text}" هو كيان حقيقي يحمل بيانات مستقلة.`, 'success');
+                renderStage1Words();
+                renderS1Zones();
+
+                // التوثق من العثور على الكيانين المطلوبة (Student & Course)
+                const correctCount = state.s1Selected.filter(i => s1Words[i].isEntity).length;
+                if (correctCount === 2) {
+                    document.getElementById('s1-next-btn').classList.remove('hidden');
+                    triggerNotification('ممتاز! لقد استخرجت كافة الكيانات بنجاح، يمكنك الانتقال للمرحلة التالية.', 'success');
+                }
+            } else {
+                triggerNotification(`للأسف، "${word.text}" ليس كياناً حقيقياً! حاول مجدداً واقرأ الشرح المساعد.`, 'error');
+            }
+        };
+
+        const renderS1Zones = () => {
+            const zone = document.getElementById('s1-entities-zone');
+            zone.innerHTML = '';
+            state.s1Selected.forEach(index => {
+                const tag = document.createElement('div');
+                tag.className = 'px-3 py-1.5 bg-teal-500 text-slate-950 rounded-lg font-bold text-xs animate-scale-up';
+                tag.innerText = s1Words[index].text;
+                zone.appendChild(tag);
+            });
+        };
+
+        const resetStage1 = () => {
+            state.s1Selected = [];
+            renderStage1Words();
+            document.getElementById('s1-entities-zone').innerHTML = `<p class="text-xs text-slate-500 italic text-center py-4">انقر على الكلمات الصحيحة في الأعلى لتصنيفها هنا...</p>`;
+            document.getElementById('s1-next-btn').classList.add('hidden');
+        };
+
+
+        // --- المرحلة الثانية: توزيع وفرز الخصائص ---
+        const s2Attrs = [
+            { text: 'StudentID (الرقم الجامعي)', target: 'student' },
+            { text: 'StudentName (اسم الطالب)', target: 'student' },
+            { text: 'GPA (المعدل التراكمي)', target: 'student' },
+            { text: 'CourseID (رمز المساق)', target: 'course' },
+            { text: 'CourseTitle (اسم المساق)', target: 'course' },
+            { text: 'Credits (الساعات المعتمدة)', target: 'course' },
+            { text: 'Price (سعر الشراء المباشر)', target: 'distractor' }
+        ];
+
+        const renderStage2 = () => {
+            const pool = document.getElementById('s2-attributes-pool');
+            if (!pool) return;
+            pool.innerHTML = '';
+
+            s2Attrs.forEach((attr, idx) => {
+                // إظهار البطاقة في حال لم يتم فرزها بعد بكلا الكيانين
+                const isAssigned = state.s2Data.student.includes(idx) || state.s2Data.course.includes(idx);
+                if (isAssigned) return;
+
+                const btn = document.createElement('button');
+                btn.innerText = attr.text;
+                btn.className = 'px-3 py-2 bg-slate-900 border border-slate-800 rounded-lg text-xs font-semibold text-slate-300 hover:border-teal-500/50 transition-all text-center';
+                
+                btn.onclick = () => {
+                    // فتح قائمة خيارات سريعة مريحة للفرز
+                    const choice = confirm(`أين تود فرز الخاصية: [ ${attr.text} ] ؟\n\nاضغط OK (موافق) لكيان الطالب (Student)\nاضغط Cancel (إلغاء الأمر) لكيان المساق (Course)`);
+                    if (choice) {
+                        state.s2Data.student.push(idx);
+                    } else {
+                        state.s2Data.course.push(idx);
+                    }
+                    renderStage2();
+                    renderS2Zones();
+                };
+                pool.appendChild(btn);
+            });
+        };
+
+        const renderS2Zones = () => {
+            const sZone = document.getElementById('s2-student-zone');
+            const cZone = document.getElementById('s2-course-zone');
+
+            // صندوق الطالب
+            if (state.s2Data.student.length > 0) {
+                sZone.innerHTML = '';
+                state.s2Data.student.forEach(idx => {
+                    const tag = document.createElement('div');
+                    tag.className = 'px-2.5 py-1 bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 rounded-lg text-xs font-bold flex items-center gap-2 cursor-pointer';
+                    tag.innerHTML = `<span>${s2Attrs[idx].text}</span><span class="text-rose-400 hover:text-rose-300 text-[10px]">✕</span>`;
+                    tag.onclick = () => {
+                        state.s2Data.student = state.s2Data.student.filter(i => i !== idx);
+                        renderStage2(); renderS2Zones();
+                    };
+                    sZone.appendChild(tag);
+                });
+            } else {
+                sZone.innerHTML = `<p class="text-xs text-slate-600 text-center italic">لا يوجد خصائص مخصصة للطالب حالياً...</p>`;
+            }
+
+            // صندوق المساق
+            if (state.s2Data.course.length > 0) {
+                cZone.innerHTML = '';
+                state.s2Data.course.forEach(idx => {
+                    const tag = document.createElement('div');
+                    tag.className = 'px-2.5 py-1 bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 rounded-lg text-xs font-bold flex items-center gap-2 cursor-pointer';
+                    tag.innerHTML = `<span>${s2Attrs[idx].text}</span><span class="text-rose-400 hover:text-rose-300 text-[10px]">✕</span>`;
+                    tag.onclick = () => {
+                        state.s2Data.course = state.s2Data.course.filter(i => i !== idx);
+                        renderStage2(); renderS2Zones();
+                    };
+                    cZone.appendChild(tag);
+                });
+            } else {
+                cZone.innerHTML = `<p class="text-xs text-slate-600 text-center italic">لا يوجد خصائص مخصصة للمساق حالياً...</p>`;
+            }
+        };
+
+        const checkStage2 = () => {
+            // التحقق من صحة التوزيع المنهجي بالكامل للخصائص الأساسية
+            const sCorrect = state.s2Data.student.every(idx => s2Attrs[idx].target === 'student') && state.s2Data.student.length === 3;
+            const cCorrect = state.s2Data.course.every(idx => s2Attrs[idx].target === 'course') && state.s2Data.course.length === 3;
+
+            if (sCorrect && cCorrect) {
+                updateScore(15);
+                triggerNotification('تحليل مذهل! لقد وزعت كافة الخصائص بشكل هندسي دقيق واستبعدت المشتت بنجاح.', 'success');
+                document.getElementById('s2-next-btn').classList.remove('hidden');
+            } else {
+                triggerNotification('تنبيه: يوجد خصائص مفقودة أو موزعة بشكل خاطئ بين الكيانين، يرجى المراجعة والتعديل!', 'error');
+            }
+        };
+
+
+        // --- المرحلة الثالثة: اختيار المفاتيح الأساسية ---
+        const renderStage3 = () => {
+            const sAttrsContainer = document.getElementById('s3-student-attrs');
+            const cAttrsContainer = document.getElementById('s3-course-attrs');
+
+            // تعبئة خيارات الطالب
+            sAttrsContainer.innerHTML = '';
+            ['StudentID (الرقم الجامعي)', 'StudentName (الاسم)', 'GPA (المعدل)'].forEach(item => {
+                const b = document.createElement('button');
+                b.innerText = item;
+                const isSelected = state.s3StudentPK === item;
+                b.className = `w-full text-right p-3 rounded-xl border text-xs font-bold transition-all ${
+                    isSelected ? 'bg-indigo-500/20 border-indigo-500 text-indigo-300' : 'bg-slate-900 border-slate-800 text-slate-400 hover:border-slate-700'
+                }`;
+                b.onclick = () => {
+                    state.s3StudentPK = item;
+                    renderStage3();
+                    checkStage3Ready();
+                };
+                sAttrsContainer.appendChild(b);
+            });
+
+            // تعبئة خيارات المساق
+            cAttrsContainer.innerHTML = '';
+            ['CourseID (رمز المساق)', 'CourseTitle (اسم المساق)', 'Credits (الساعات)'].forEach(item => {
+                const b = document.createElement('button');
+                b.innerText = item;
+                const isSelected = state.s3CoursePK === item;
+                b.className = `w-full text-right p-3 rounded-xl border text-xs font-bold transition-all ${
+                    isSelected ? 'bg-emerald-500/20 border-emerald-500 text-emerald-300' : 'bg-slate-900 border-slate-800 text-slate-400 hover:border-slate-700'
+                }`;
+                b.onclick = () => {
+                    state.s3CoursePK = item;
+                    renderStage3();
+                    checkStage3Ready();
+                };
+                cAttrsContainer.appendChild(b);
+            });
+        };
+
+        const checkStage3Ready = () => {
+            if (state.s3StudentPK && state.s3CoursePK) {
+                if (state.s3StudentPK.startsWith('StudentID') && state.s3CoursePK.startsWith('CourseID')) {
+                    updateScore(15);
+                    triggerNotification('أحسنت الاختيار! المعرفات الفريدة (IDs) هي أفضل ما يمثل المفاتيح الأساسية بالأنظمة.', 'success');
+                    document.getElementById('s3-next-btn').classList.remove('hidden');
+                } else {
+                    triggerNotification('تنبيه: الخصائص الاختيارية المحددة قد تتكرر قيمها ولا تصلح كمفاتيح أساسية فريدة، راجع اختيارك!', 'error');
+                }
+            }
+        };
+
+
+        // --- المرحلة الرابعة والخامسة: صياغة الجمل والعلاقات ---
+        const updateS4State = () => {
+            state.s4Relation = document.getElementById('s4-relation-select').value;
+        };
+
+        const setCardStudent = (val) => {
+            state.s5StudentCard = val;
+            document.getElementById('s5-student-one').className = `flex-1 py-3 rounded-lg text-xs font-bold border ${val === 'one' ? 'bg-teal-500/10 border-teal-500 text-teal-400' : 'bg-slate-900 border-slate-800 text-slate-500'}`;
+            document.getElementById('s5-student-many').className = `flex-1 py-3 rounded-lg text-xs font-bold border ${val === 'many' ? 'bg-teal-500/10 border-teal-500 text-teal-400' : 'bg-slate-900 border-slate-800 text-slate-500'}`;
+        };
+
+        const setCardCourse = (val) => {
+            state.s5CourseCard = val;
+            document.getElementById('s5-course-one').className = `flex-1 py-3 rounded-lg text-xs font-bold border ${val === 'one' ? 'bg-teal-500/10 border-teal-500 text-teal-400' : 'bg-slate-900 border-slate-800 text-slate-500'}`;
+            document.getElementById('s5-course-many').className = `flex-1 py-3 rounded-lg text-xs font-bold border ${val === 'many' ? 'bg-teal-500/10 border-teal-500 text-teal-400' : 'bg-slate-900 border-slate-800 text-slate-500'}`;
+        };
+
+        const validateS45 = () => {
+            if (state.s4Relation === 'registers' && state.s5StudentCard === 'many' && state.s5CourseCard === 'many') {
+                updateScore(20);
+                document.getElementById('s5-success-panel').classList.remove('hidden');
+                triggerNotification('رائع جداً! صياغة وقياس كارديناليتي مثالي وصحيح 100%.', 'success');
+            } else {
+                triggerNotification('الرجاء صياغة العلاقة الصحيحة وتحديد الكارديناليتي الفعلي بالاتجاهين لاعتماد الخطوة!', 'error');
+            }
+        };
+
+
+        // --- المرحلة السادسة: هندسة الكسر المرجعي والكيان الوسيط ---
+        const selectS6Option = (opt) => {
+            state.s6Option = opt;
+            if (opt === 'b') {
+                updateScore(20);
+                document.getElementById('s6-opt-b').className = 'w-full text-right p-4 rounded-xl border text-xs leading-relaxed transition-all bg-emerald-500/10 border-emerald-500 text-emerald-400 font-bold';
+                document.getElementById('s6-opt-a').className = 'w-full text-right p-4 rounded-xl border text-xs leading-relaxed transition-all bg-slate-900 border-slate-800 text-slate-500 opacity-50 pointer-events-none';
+                document.getElementById('s6-step2').classList.remove('hidden');
+                triggerNotification('مهندس بيانات عبقري! إنشاء الكيان الوسيط هو الكلمة السحرية لكسر تعقيد الأنظمة.', 'success');
+            } else {
+                triggerNotification('خيار خاطئ! هذا التوجه يؤدي لتكرار البيانات وضياع سلامة التخزين المرجعي.', 'error');
+            }
+        };
+
+
+        // --- المرحلة السابعة: تحدي المكتبة الشامل الاستباقي ---
+        const submitStage8 = (relation) => {
+            if (relation === 'many-many') {
+                updateScore(40);
+                triggerNotification('ألف مبروك! لقد أتممت التحدي الشامل للمكتبة بنجاح واستحققت الرمز الذهبي!', 'success');
+                setTimeout(() => navigate('stage9'), 2000);
+            } else {
+                triggerNotification('الرجاء اختيار الخيار الصحيح المبني على العلاقة الحقيقية لتسليم النشاط!', 'error');
+            }
+        };
+
+
+        // --- المرحلة الثامنة: تسليم المشروع التطبيقي النهائي --
+        const submitProject = () => {
+            const entitiesVal = document.getElementById('proj-entities').value.trim();
+            const keysVal = document.getElementById('proj-keys').value.trim();
+            const relVal = document.getElementById('proj-relations').value.trim();
+
+            if (entitiesVal && keysVal && relVal) {
+                updateScore(50);
+                state.projectSubmitted = true;
+                document.getElementById('project-success-panel').classList.remove('hidden');
+                triggerNotification('تم تسليم مشروعك بنجاح! أحسنت عملاً يا مهندس البيانات المتميز.', 'success');
+            } else {
+                triggerNotification('الرجاء تعبئة جميع حقول الاستمارة قبل تسليم المشروع للمراجعة والتقييم!', 'error');
+            }
+        };
+
+
+        // --- تشغيل التطبيق المبدئي ---
+        window.onload = () => {
+            renderSidebar();
+            renderStage1Words();
+            renderStage2();
+            renderStage3();
+        };
+    </script>
+</body>
+</html>
